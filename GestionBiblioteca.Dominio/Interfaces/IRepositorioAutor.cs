@@ -8,7 +8,7 @@ namespace GestionBiblioteca.Dominio.Interfaces
 {
     public interface IRepositorioAutor
     {
-        Task<IEnumerable<Author>> ObtenerTodosAsync();
+        //Task<IEnumerable<Author>> ObtenerTodosAsync();
         Task<IEnumerable<Author>> ObtenerTodosAsync(int pagina, int tamanio);
         Task<Author?> ObtenerPorNombreAsync(string nombre);
         Task<Author?> ObtenerPorIdAsync(Guid id);
