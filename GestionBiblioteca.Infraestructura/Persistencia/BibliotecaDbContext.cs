@@ -28,7 +28,7 @@ namespace GestionBiblioteca.Infraestructura.Persistencia
                 entity.Property(e => e.Isbn).IsRequired().HasMaxLength(13);
                 entity.Property(e => e.Title).IsRequired().HasMaxLength(500);
                 entity.Property(e => e.CoverUrl).HasMaxLength(1000);
-                entity.Property(e => e.PublishedYear).IsRequired();
+                entity.Property(e => e.PublicationYear).IsRequired();
 
                 // Relación con Autor (CASCADE DELETE)
                 entity.HasOne(e => e.Author)

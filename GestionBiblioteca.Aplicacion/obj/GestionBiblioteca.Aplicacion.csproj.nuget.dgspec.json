@@ -49,15 +49,15 @@
           "dependencies": {
             "CsvHelper": {
               "target": "Package",
-              "version": "[33.1.0, )"
+              "version": "[30.0.1, )"
             },
             "FluentValidation": {
               "target": "Package",
-              "version": "[12.1.1, )"
+              "version": "[11.9.0, )"
             },
             "FluentValidation.DependencyInjectionExtensions": {
               "target": "Package",
-              "version": "[12.1.1, )"
+              "version": "[11.9.0, )"
             }
           },
           "imports": [
