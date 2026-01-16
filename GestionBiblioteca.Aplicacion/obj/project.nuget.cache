@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "20Ak1QVks3M=",
+  "success": true,
+  "projectFilePath": "/Users/jjsr/nubelity/GestionBiblioteca/GestionBiblioteca.Aplicacion/GestionBiblioteca.Aplicacion.csproj",
+  "expectedPackageFiles": [
+    "/Users/jjsr/.nuget/packages/csvhelper/33.1.0/csvhelper.33.1.0.nupkg.sha512",
+    "/Users/jjsr/.nuget/packages/fluentvalidation/12.1.1/fluentvalidation.12.1.1.nupkg.sha512",
+    "/Users/jjsr/.nuget/packages/fluentvalidation.dependencyinjectionextensions/12.1.1/fluentvalidation.dependencyinjectionextensions.12.1.1.nupkg.sha512",
+    "/Users/jjsr/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/2.1.0/microsoft.extensions.dependencyinjection.abstractions.2.1.0.nupkg.sha512"
+  ],
+  "logs": []
+}
