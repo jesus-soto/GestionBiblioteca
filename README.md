@@ -158,7 +158,7 @@ docker rm biblioteca-api
 
 **Parámetros de consulta:**
 - `nombreUsuario`: Nombre de usuario
-- `contrasenia`: Contraseña
+- `clave`: Contraseña
 
 **Usuarios Precargados:**
 - Usuario: `admin` / Contraseña: `password123`
@@ -166,7 +166,7 @@ docker rm biblioteca-api
 
 **Ejemplo con cURL:**
 ```bash
-curl -X GET "http://localhost:8080/api/login?nombreUsuario=admin&contrasenia=password123"
+curl -X GET "http://localhost:8080/api/login?nombreUsuario=admin&clave=password123"
 ```
 
 **Respuesta:**
