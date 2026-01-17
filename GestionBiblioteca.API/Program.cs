@@ -17,9 +17,18 @@ using GestionBiblioteca.API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-/// Configuración de DbContext con SQLite en memoria
+// Configurar para escuchar en todas las interfaces
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(80);
+});
+
+// Configuración de DbContext con SQLite
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
+    ?? "Data Source=/app/data/biblioteca.db";
+
 builder.Services.AddDbContext<BibliotecaDbContext>(options =>
-    options.UseSqlite("Data Source=biblioteca.db"));
+    options.UseSqlite(connectionString));
 
 // Repositorios
 builder.Services.AddScoped<IRepositorioLibro, RepositorioLibro>();
@@ -119,27 +128,42 @@ builder.Services.AddSwaggerGen(options =>
 var app = builder.Build();
 
 // Crear base de datos y aplicar migraciones
-using (var scope = app.Services.CreateScope())
+try
 {
-    var context = scope.ServiceProvider.GetRequiredService<BibliotecaDbContext>();
-    context.Database.EnsureCreated();
+    using (var scope = app.Services.CreateScope())
+    {
+        var context = scope.ServiceProvider.GetRequiredService<BibliotecaDbContext>();
+        context.Database.EnsureCreated();
+    }
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Error creando la base de datos: {ex.Message}");
 }
 
 // Middleware de manejo de excepciones
 app.UseMiddleware<ManejadorExcepcionesMiddleware>();
 
-// Configuración del pipeline HTTP
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "API Gestión Biblioteca v1");
-        c.RoutePrefix = string.Empty; // Swagger en la raíz
-    });
-}
+// Health check endpoint (público)
+app.MapGet("/health", () => Results.Ok(new { status = "healthy", timestamp = DateTime.UtcNow }))
+    .WithName("Health")
+    .WithOpenApi()
+    .AllowAnonymous();
 
-app.UseHttpsRedirection();
+// Configuración del pipeline HTTP
+// Habilitar Swagger en todos los ambientes para debugging
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "API Gestión Biblioteca v1");
+    c.RoutePrefix = string.Empty; // Swagger en la raíz
+});
+
+// No redirigir a HTTPS en Docker (solo HTTP disponible)
+if (!app.Environment.IsProduction())
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseAuthentication();
 app.UseAuthorization();
